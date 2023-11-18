@@ -1,10 +1,10 @@
 import featuretools as ft
 import pandas as pd
 
-#DEFINE ENTITY
+#DEFINE ENTITIES AND ENTITY SET
 
 #CUSTOMERS
-#Create dataframe 
+#CREATE DATAFRAME
 customersData = {
     'CustomerID': [101, 102, 103],
     'Name': ['John Doe', 'Jane Smith', 'Mike Jordan'],
@@ -14,15 +14,14 @@ customersData = {
 
 customers_df = pd.DataFrame(customersData)
 
-# Create empty entity set
+# CREATE EMPTY ENTITY SET
 es = ft.EntitySet(id="eCommerce_set")
 
-# Define entity
 customers_entity = es.add_dataframe(
-    dataframe=customers_df,  # DataFrame
-    dataframe_name='Customers',  # Specify the name for the entity
-    index='CustomerID',  # Unique identifier for the entity
-     time_index='SignupDate'
+    dataframe=customers_df,  # DATAFRAME
+    dataframe_name='Customers',  # SPECIFY ENTITY NAME
+    index='CustomerID',  # UNIQUE IDENTIFIER FOR THE ENTITY
+    time_index='SignupDate'
 )
 
 #PRODUCTS
@@ -56,7 +55,7 @@ orders_entity = es.add_dataframe(
     dataframe=orders_df,  
     dataframe_name='Orders',  
     index='OrderID' , 
-    time_index='OrderDate'
+    time_index='OrderDate',
 )
 
 
@@ -103,11 +102,11 @@ relationship3 = es.add_relationship(
 
 )
 
-# Print the EntitySet
+# PRINT THE ENTITYSET
 print(es)
 
 
-# Set Pandas display options to show all columns and rows
+# SET PANDAS DISPLAY OPTIONS TO SHOW ALL COLUMNS AND ROWS
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 
@@ -117,11 +116,10 @@ feature_matrix, feature_defs = ft.dfs(
     entityset=es,
     target_dataframe_name="Orders",
     verbose=True,
-    max_depth=2,
-
+    max_depth=2
 )
 
-# Print the generated feature matrix
+# PRINT THE GENERATED FEATURE MATRIX
 print(feature_matrix)
 print(feature_defs)
 
